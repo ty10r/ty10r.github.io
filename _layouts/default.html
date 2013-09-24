@@ -15,30 +15,54 @@
     </head>
     <body>
 
+        <header>
+          <h1 id="logo"><a href="/">{{ site.name }}</a></h1>
+          <nav class='navbar'>
+            <ul class="siteList">
+              <li><a href="/">Facebook</a></li>
+              <li><a href="/">Twitter</a></li>
+              <li><a href="/">LinkedIn</a></li>
+            </ul>
+
+            <ul class='collections'>
+              <li><a href="#">Blog Posts</a></li>
+              <li><a href="#">Projects</a></li>
+            </ul>
+          </nav>
+        </header>   
+
+        <section class="bio">   
+          <h2 class="hidden">Interests</h2>
+          <ul id="tags">
+            <li>Web Development</li>
+            <li>UCLA</li>
+            <li>Computer Science</li>
+            <li>Diversity in Tech</li>
+          </ul>
+        </section>
+
         <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
-
-          {{ content }}
-
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Tylor Louis<br />
-                Student/Developer<br />
-                tylorlouis@ucla.edu
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/ty10r">github.com/ty10r</a><br />
-                <a href="https://twitter.com/tylorlouis">twitter.com/tylorlouis</a><br />
-              </p>
-            </div>
+          <div id="content">
+            {{ content }}
           </div>
         </div>
+
+        <div class="footer">
+          <div class="contact">
+            <p>
+              Tylor Louis<br />
+              Student/Developer<br />
+              tylorlouis@ucla.edu
+            </p>
+          </div>
+          <div class="contact">
+            <p>
+              <a href="https://github.com/ty10r">github.com/ty10r</a><br />
+              <a href="https://twitter.com/tylorlouis">twitter.com/tylorlouis</a><br />
+            </p>
+          </div>
+        </div>
+      </div>
 
     </body>
 </html>
