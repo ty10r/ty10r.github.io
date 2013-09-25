@@ -54,49 +54,6 @@ ul.posts span {
 /*
 /*****************************************************************************/
 
-header {
-  display: block;
-}
-header a {
-  font-weight: bold;
-  text-decoration: none;
-}
-header li {
-  list-style: none;
-  display: inline;
-}
-
-header h1#logo {
-  font-size: 150%;
-  height: 2em;
-  float: left;
-  display: inline-block;
-}
-
-header h1#logo a {
-  color: #a00;
-}
-
-header h1#logo a:hover {
-  color: #000;
-}
-
-header a.extra {
-  color: #aaa;
-  margin-left: 1em;
-}
-
-header a.extra:hover {
-  color: #000;
-}
-
-ul.siteList {
-  text-align: right;  
-}
-ul.collections {
-  text-align: left;
-}
-
 section.bio {
   float: left;
 }
