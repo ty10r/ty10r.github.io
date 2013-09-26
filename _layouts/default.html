@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{% if page.title %} {{ page.title }} |{% endif %} Tylor Louis</title>
+        <title>Tylor Louis {% if page.title %}| {{ page.title }}{% endif %}</title>
         <meta name="viewport" content="width=device-width">
 
         <!-- syntax highlighting CSS -->
@@ -15,59 +15,24 @@
 
     </head>
     <body>
+    {% if page.categories contains 'home' %}
+      {% include homenav.html %}
+    {% endif %}
+    {% if page.categories contains 'blog' %}
+      {% include blognav.html %}
+    {% endif %}
+    {% if page.categories contains 'projects' %}
+      {% include projnav.html %}
+    {% endif %}
 
-        <header class="navbar">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand">{{ site.name }}</a>
-          </div>
+    {% include sidebio.html %}
 
-          <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"> <a href="/">Home</a> </li>
-              <li> <a href="#">Blog</a> </li>
-              <li> <a href="#">Projects</a> </li>
-            </ul>
-          </div>
-        </header>   
-
-        <section class="bio">   
-          <h2 class="hidden">Interests</h2>
-          <ul id="tags">
-            <li>Web Development</li>
-            <li>UCLA</li>
-            <li>Computer Science</li>
-            <li>Diversity in Tech</li>
-          </ul>
-        </section>
-
-        <div class="site">
-          <div id="content">
-            {{ content }}
-          </div>
-        </div>
-
-        <div class="footer">
-          <div class="contact">
-            <p>
-              Tylor Louis<br />
-              Student/Developer<br />
-              tylorlouis@ucla.edu
-            </p>
-          </div>
-          <div class="contact">
-            <p>
-              <a href="https://github.com/ty10r">github.com/ty10r</a><br />
-              <a href="https://twitter.com/tylorlouis">twitter.com/tylorlouis</a><br />
-            </p>
-          </div>
-        </div>
+    <div class="site">
+      <div id="content">
+        {{ content }}
       </div>
+    </div>
+      
 
     </body>
 </html>
