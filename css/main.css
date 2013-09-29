@@ -84,9 +84,7 @@ section.bio {
   top: 50px;
   left: 0px;
   bottom: 0px;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #28525c;
+  width: 130px;
 }
 
 .site .meta {
@@ -118,6 +116,15 @@ section.bio {
 
 .site .footer .rss img {
   border: 0;
+}
+
+ul.nav li {
+  margin-left: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 4px;
+  border-color: #fff;
+  padding: 0px;
 }
 
 /*****************************************************************************/
