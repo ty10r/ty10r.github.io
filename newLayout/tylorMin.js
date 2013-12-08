@@ -9,6 +9,23 @@ $(document).ready(function() {
 	  transitionEnd: function(index, elem) {}
 	});
 
+	// Stick Navbar on Scroll
+	var win = $(window);
+	var filter = $('nav');
+	var filterSpacer = $('<div />', {
+      "class": "filter-drop-spacer",
+      "height": filter.outerHeight()
+    });
+	win.scroll(function(){     
+		if(!filter.hasClass('fix') && win.scrollTop() > filter.offset().top){
+			filter.before(filterSpacer);
+			filter.addClass("fix");
+		} else if (filter.hasClass('fix')  && win.scrollTop() < filterSpacer.offset().top){
+			filter.removeClass("fix");
+			filterSpacer.remove();
+		}
+	});
+
 	// Navbar State
 	var nav = new Nav();
 	nav.SetPos( pageSwipe.getPos() );
@@ -28,6 +45,7 @@ $(document).ready(function() {
 		}
 		key.preventDefault();
 	});
+
 });
 
 
@@ -36,9 +54,8 @@ var Nav = function() {
 	var currentPos = 0;
 
 	self.SetPos = function( pos ) {
-		var inactive = $('#pos-' + currentPos).attr("class").replace(" active", "");
-		$('#pos-' + currentPos).attr("class", inactive);
-		$('#pos-' + pos).attr("class", inactive + " active");
+		$('#pos-' + currentPos).removeClass( "active" );
+		$('#pos-' + pos).addClass( "active" );
 		currentPos = pos;
 	}
 };

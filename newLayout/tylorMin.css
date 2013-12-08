@@ -45,6 +45,12 @@ nav .tab {
 	line-height: 40px;
 }
 
+.fix {
+	position: fixed;
+	top: 0px;
+	z-index: 100;
+}
+
 .slider div {
 	height: 10px;
 }
@@ -54,7 +60,7 @@ nav .tab {
 
 .post {
 	background-color: #FFF;
-	margin: 10px 0px 10px 0px;
+	margin: 0px 0px 20px 0px;
 	padding: 5px;
 }
 
