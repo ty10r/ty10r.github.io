@@ -30,6 +30,12 @@ $(document).ready(function() {
 	var nav = new Nav();
 	nav.SetPos( pageSwipe.getPos() );
 
+	// Give pages scroll states
+	var pages = [new PageTab, new PageTab, new PageTab];
+	$(window).on("custSwipe", function( event, oldPage, newPage) {
+		pages[oldPage].SavePos();
+		pages[newPage].RecallState();
+	});
 
 	// Bind Key Navigation
 	$(document).keydown(function(key) {
@@ -59,3 +65,18 @@ var Nav = function() {
 		currentPos = pos;
 	}
 };
+
+var PageTab = function() {
+	var self = this;
+	var savedPosition = $(window).scrollTop();
+
+	self.SavePos = function() {
+		savedPosition = $(window).scrollTop();
+	}
+
+	self.RecallState = function() {
+		if ( $(window).scrollTop() != savedPosition ) {
+			$('body,html').animate({scrollTop: savedPosition}, 200);
+		}
+	}
+}
