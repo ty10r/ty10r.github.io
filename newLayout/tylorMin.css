@@ -1,0 +1,81 @@
+body {
+	font-family: 'Droid Sans', sans-serif;
+	background: #F7F5F5;
+	color: #323333;
+}
+
+h1 {
+	margin: 0 0 0 0;
+}
+
+p {
+	margin: 0 0 0 0;
+}
+
+.inner {
+	margin: 0 auto;
+	position: relative;
+	width: 700px;
+}
+
+.header	{
+	text-align: center;
+	margin: 115px 0px 115px 0px;
+}
+
+.logo {
+	font-size: 50px;	
+	font-weight: 300;
+	font-family: 'Kreon', serif;
+	letter-spacing: -0.05em;
+	line-height: 1;
+}
+
+nav {
+	text-align: center;
+	width: 100%;
+	height: 60px;
+	background: #323333;
+	color: #F7F5F5;
+}
+
+nav .tab {
+	font-size: 20px;
+	height: 40px;
+	line-height: 40px;
+}
+
+.slider div {
+	height: 10px;
+}
+.slider .active {
+	background-color: red;
+}
+
+.post {
+	background-color: #FFF;
+	margin: 10px 0px 10px 0px;
+	padding: 5px;
+}
+
+.subject {
+	font-family: 'Droid Sans', sans-serif;
+	font-weight: 700;
+	margin: 0 0 0 0;
+}
+
+/* Swipe Requirements */
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > section {
+  float:left;
+  width:100%;
+  position: relative;
+}
