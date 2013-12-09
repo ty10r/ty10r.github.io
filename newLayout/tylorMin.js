@@ -30,13 +30,6 @@ $(document).ready(function() {
 	var nav = new Nav();
 	nav.SetPos( pageSwipe.getPos() );
 
-	// Give pages scroll states
-	var pages = [new PageTab, new PageTab, new PageTab];
-	$(window).on("custSwipe", function( event, oldPage, newPage) {
-		pages[oldPage].SavePos();
-		pages[newPage].RecallState();
-	});
-
 	// Bind Key Navigation
 	$(document).keydown(function(key) {
 		switch(key.which) {
@@ -52,8 +45,76 @@ $(document).ready(function() {
 		key.preventDefault();
 	});
 
+	// Give pages scroll states
+	var pages = [new PageTab, new PageTab, new PageTab];
+	$(window).on("custSwipe", function( event, oldPage, newPage) {
+		pages[oldPage].SavePos();
+		pages[newPage].RecallState();
+	});
+
+	// Slide down to show a post's contents
+	$('.content').hide();
+	$('.loading').css('opacity', 0);
+	$('.expand').click(function( event ) {
+		var button = $(this);
+		var loading = new LoadAnimation( button.next() );
+		var url = button.data('url');
+		var container = button.data('container');
+		loading.RunAnimation();
+		$.pjax({url: url, container: '#'+container});
+		$(document).on('pjax:complete', function() {
+			var content = button.prev();
+			loading.Stop();
+			if ( content.is( ':hidden' ) ) {
+				content.css('opacity', 0)
+				   		.slideToggle('slow')
+				   		.animate(
+				   			{ opacity: 1 },
+				    		{ queue: false, duration: 'slow' });
+				button.html('∧')
+			}
+			else {
+				content.css('opacity', 1)
+				   		.slideToggle('slow')
+				   		.animate(
+				   			{ opacity: 0 },
+				    		{ queue: false, duration: 'slow' });
+				button.html('∨');
+			}
+		});
+	});
+
 });
 
+var LoadAnimation = function( elem ) {
+	var self = this;
+	var stopped = false;
+	var loader = elem;
+	loader.css('opacity', 0);
+	loader.css('z-index', 100);
+
+	self.Stop = function() {
+		loader.stop( true );
+		loader.css('opacity', 0);
+		loader.css('z-index', 0);
+	};
+
+	self.RunAnimation = function() {
+		stopped = false;
+		if ( loader.css('opacity') == 1 ) {
+			loader.animate({ opacity: 0 }, { duration: 700, complete: function() {
+				if ( stopped ) return;
+				return self.RunAnimation();
+			}});
+		}
+		else {
+			loader.css('opacity', 0).animate({ opacity: 1 }, { duration: 700, complete: function() {
+				if ( stopped ) return;
+				return self.RunAnimation();
+			}});		
+		}
+	};
+};
 
 var Nav = function() {
 	var self = this;
