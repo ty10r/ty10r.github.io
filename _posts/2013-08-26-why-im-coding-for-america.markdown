@@ -2,10 +2,13 @@
 layout: post
 title:  "Why I'm Coding for America"
 date:   2013-08-26 17:23:51
-categories: experience
+description: BizFriendly puts the web to work for your business.
+url: tylor.im/blog/2013/08/26/why-im-coding-for-america.html
+categories: blog
+name: coding-for-america
 ---
 
-I spent the summer of 2013 interning at [Code for America][Code for America]. Here, I had the chance to watch a great community of civic-tech professionals make positive impact. Code for America is a cross-pollination of government and innovational tech industries. 
+I spent the summer of 2013 interning at [Code for America][Code for America]. There, I had the chance to watch a great community of civic-tech professionals make positive impact. Code for America is a cross-pollination of government and innovational tech industries. 
 
 At the beginning of summer, I wrote a guest blog post: [Why I'm Coding for America][Why I'm Coding for America]. There, you can read about the greatly fulfilling experience I had at CfA.
 

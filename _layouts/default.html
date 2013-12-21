@@ -1,38 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Tylor Louis {% if page.title %}| {{ page.title }}{% endif %}</title>
-        <meta name="viewport" content="width=device-width">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Tylor Louis</title>
+    <meta name="author" content="Tylor Louis">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Kreon' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/tylorMin.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.pjax.js"></script>
+    <script type="text/javascript" src="/js/swipe.js"></script>
+    <script type="text/javascript" src="/js/tylorMin.js"></script>
+</head>
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
-
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-
-    </head>
     <body>
-    {% if page.categories contains 'home' %}
-      {% include homenav.html %}
-    {% endif %}
-    {% if page.categories contains 'blog' %}
-      {% include blognav.html %}
-    {% endif %}
-    {% if page.categories contains 'projects' %}
-      {% include projnav.html %}
-    {% endif %}
 
-    {% include sidebio.html %}
-
-    <div class="site">
-      <div id="content">
-        {{ content }}
-      </div>
-    </div>
-      
+        {% include nav.html %}
+        <div id="pageSwipe" class="swipe">
+          <div class="swipe-wrap">
+            {{ content }}
+          </div>
+        </div>
 
     </body>
 </html>
