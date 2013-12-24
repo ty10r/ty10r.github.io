@@ -1,19 +1,23 @@
 $(document).ready(function() {
 	var win = $(window);
-	// Configure pjax
 	$.pjax.defaults.scrollTo = false;
 
+
+	//*******************************************
+	//* INIT CLASSES
+	//*******************************************
+	// Post views
+	var allPosts = {};
+	$( '.post' ).each( function( ind, element ) {
+		var $this = $( this );
+		allPosts[ $this.data( 'url' ) ] = new Post( $this.data( 'url' ) );
+	});
 	// Give pages scroll states
 	var pages = [new Page(win), new Page(win), new Page(win)];
-
-	var URL = window.location.pathname;
-	if ( URL && URL[0] === '/' ) URL = null;
-
-	// Setup Swipe Object
+	// Setup Navigation
 	var lastPage = 0;
 	var nav = new Nav( lastPage );
-	var elem = document.getElementById('pageSwipe');
-	window.pageSwipe = Swipe(elem, {
+	window.pageSwipe = Swipe(document.getElementById('pageSwipe') , {
 		startSlide: lastPage,
 		speed: 400,
 		stopPropagation: false,
@@ -26,13 +30,10 @@ $(document).ready(function() {
 	  transitionEnd: function(index, elem) {}
 	});
 
-	if ( URL ) {
-		var post = $( ".post[data-url=\"" + url +"\"]" );
-		togglePost( post, false );
-		win.scrollTop($(".post[data-url=\""+URL+"\"]").offset().top);
-		pageSwipe.slide( post.parent().parent().data( 'index' ), 0 );
-	}
 
+	//*******************************************
+	//* EVENT HANDLERS
+	//*******************************************
 	// Stick Navbar on Scroll
 	var navFilter = $('nav'), baseLine = undefined;
 	var filterSpacer = $('<div />', {
@@ -66,58 +67,22 @@ $(document).ready(function() {
 	});
 
 	// If no data loaded, pjax request, else toggle post view
-	$('.expand').click(function( event ) {
-		var button = $(this);
-		var content = button.prev();
-		var loader = button.next();
-		var url = button.parent().data( 'url' );
-		var container = button.data( 'container' );
-
-		if ( !content.hasClass( 'loadedPost' ) ) {
-			loader.addClass( 'glowing' );
-			$.pjax( {url: url, container: '#'+container} );
+	$('.post').click(function( event ) {
+		var postObj = allPosts[ $(this).data( 'url' ) ];
+		if ( !postObj.isExpanded ) {
+			postObj.Load();
 		}
 		else {
-			togglePost( button.parent(), true );
+			postObj.Close();
 		}
 	});
 
 	$(document).on('pjax:complete', function() {
-		PjaxStateByUrl( window.location.pathname );
+		var loadedPost = allPosts[ window.location.pathname ];
+		loadedPost.DoneLoading();
 	});
 
-	$(window).unload( function() {
-		PageStateByUrl( window.location.pathname, nav );
-	});
 });
-
-function togglePost( post, animate ) {
-	var button = post.children( '.expand' );
-	var loader = post.children( '.loader' );
-	var wasExpanded = button.hasClass( 'expanded' );
-	var content = post.children( '.content' );
-
-	if ( wasExpanded ) {
-		button.html( '∨' );
-		button.removeClass( 'expanded' );
-	}
-	else {
-		button.html( '∧' );
-		button.addClass( 'expanded' );
-	}
-	if ( animate ) {
-		content.css('opacity', wasExpanded ? 1 : 0 )
-		.slideToggle('slow')
-			.animate(
-	   			{ opacity: wasExpanded ? 0 : 1 },
-	    		{ queue: false, duration: 'slow' }
-		);
-	}
-	else {
-		if ( !wasExpanded ) content.show();
-		else content.hide();
-	}
-}
 
 function PjaxStateByUrl( url ) { 
 	var post = $( ".post[data-url=\"" + url +"\"]" );
@@ -126,14 +91,65 @@ function PjaxStateByUrl( url ) {
 	post.children( '.content' ).addClass( 'loadedPost' );
 }
 
-function PageStateByUrl( url, nav ) {
-	if ( url ) {
-		var post = $( ".post[data-url=\"" + url +"\"]" );
-		togglePost( post, false );
-		nav.SetPos( post.closest( 'section' ).data( 'index' ));
-	}
-}
+var Post = function( urlId ) {
+	var self = this;
+	var $element = $( '.post[data-url="' + urlId + '"]' );
+	var $content = $( '#' + $element.data( 'container' ) );
+	var $expander = $element.children( '.expand' );
+	var $loader = $element.children( '.loader' );
+	var isExpanded = false;
+	var isLoaded = false;
 
+	self.Loading = function() {
+		$loader.addClass( 'glowing' );
+	}
+
+	self.StopLoader = function() {
+		$loader.removeClass( 'glowing' );
+	}
+
+	self.ToggleContent = function( withAnimation ) {
+		isExpanded = isExpanded ? false : true;
+		if ( isExpanded ) {
+			$expander.html( '∧' );
+			$expander.removeClass( 'expanded' );
+		}
+		else {
+			$expander.html( '∨' );
+			$expander.addClass( 'expanded' );
+		}
+		if ( withAnimation ) {
+			$content.css('opacity', isExpanded ? 0 : 1 )
+			.slideToggle('slow')
+				.animate(
+		   			{ opacity: isExpanded ? 1 : 0 },
+		    		{ queue: false, duration: 'slow' }
+			);
+		}
+		else {
+			if ( isExpanded ) content.show();
+			else content.hide();
+		}
+	}
+
+	self.Load = function() {
+		if ( !isLoaded ) {
+			self.Loading();
+			$.pjax({
+				url: $element.data( 'url' ),
+				container: '#'+$content.attr( 'id' )
+			});
+		}
+	}
+
+	self.DoneLoading = function() {
+		self.isLoaded = true;
+		self.StopLoader();
+		self.ToggleContent( true );
+	}
+
+	return self;
+}
 
 
 var Nav = function( initPos ) {
