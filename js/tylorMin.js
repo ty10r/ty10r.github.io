@@ -69,27 +69,29 @@ $(document).ready(function() {
 	// If no data loaded, pjax request, else toggle post view
 	$('.post').click(function( event ) {
 		var postObj = allPosts[ $(this).data( 'url' ) ];
-		if ( !postObj.isExpanded ) {
+		if ( !postObj.isLoaded ) {
 			postObj.Load();
 		}
+		else if ( postObj.isExpanded ) {
+			postObj.ToggleContent( false, true );
+		}
 		else {
-			postObj.Close();
+			postObj.ToggleContent( true, true );
 		}
 	});
 
-	$(document).on('pjax:complete', function() {
+	$(document).on( 'pjax:success', function() {
 		var loadedPost = allPosts[ window.location.pathname ];
+		loadedPost.Save();
 		loadedPost.DoneLoading();
 	});
 
-});
+	$(document).on('pjax:end', function() {
+		var targetPost = allPosts[ window.location.pathname ];
+		targetPost.ToggleContent( true, true );
+	});
 
-function PjaxStateByUrl( url ) { 
-	var post = $( ".post[data-url=\"" + url +"\"]" );
-	post.children( '.loader' ).removeClass( 'glowing' );
-	togglePost( post, true );
-	post.children( '.content' ).addClass( 'loadedPost' );
-}
+});
 
 var Post = function( urlId ) {
 	var self = this;
@@ -97,8 +99,9 @@ var Post = function( urlId ) {
 	var $content = $( '#' + $element.data( 'container' ) );
 	var $expander = $element.children( '.expand' );
 	var $loader = $element.children( '.loader' );
-	var isExpanded = false;
-	var isLoaded = false;
+	self.text = undefined;
+	self.isExpanded = false;
+	self.isLoaded = false;
 
 	self.Loading = function() {
 		$loader.addClass( 'glowing' );
@@ -108,44 +111,44 @@ var Post = function( urlId ) {
 		$loader.removeClass( 'glowing' );
 	}
 
-	self.ToggleContent = function( withAnimation ) {
-		isExpanded = isExpanded ? false : true;
-		if ( isExpanded ) {
+	self.ToggleContent = function(expand, withAnimation ) {
+		self.isExpanded = expand;
+		$content.html( self.text );
+		if ( expand ) {
 			$expander.html( '∧' );
-			$expander.removeClass( 'expanded' );
 		}
 		else {
 			$expander.html( '∨' );
-			$expander.addClass( 'expanded' );
 		}
 		if ( withAnimation ) {
-			$content.css('opacity', isExpanded ? 0 : 1 )
+			$content.css('opacity', expand ? 0 : 1 )
 			.slideToggle('slow')
 				.animate(
-		   			{ opacity: isExpanded ? 1 : 0 },
+		   			{ opacity: expand ? 1 : 0 },
 		    		{ queue: false, duration: 'slow' }
 			);
 		}
 		else {
-			if ( isExpanded ) content.show();
+			if ( expand ) content.show();
 			else content.hide();
 		}
 	}
 
 	self.Load = function() {
-		if ( !isLoaded ) {
-			self.Loading();
-			$.pjax({
-				url: $element.data( 'url' ),
-				container: '#'+$content.attr( 'id' )
-			});
-		}
+		self.Loading();
+		$.pjax({
+			url: $element.data( 'url' ),
+			container: '#'+$content.attr( 'id' )
+		});
+	}
+
+	self.Save = function() {
+		self.text = $content.html();
 	}
 
 	self.DoneLoading = function() {
 		self.isLoaded = true;
 		self.StopLoader();
-		self.ToggleContent( true );
 	}
 
 	return self;
