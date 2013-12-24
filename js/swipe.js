@@ -91,7 +91,6 @@ function Swipe(container, options) {
 
     if (options.continuous) slide(index-1);
     else if (index)  {
-      $(window).trigger( "custSwipe", [index, index-1] );
       slide(index-1);
     }
 
@@ -101,7 +100,6 @@ function Swipe(container, options) {
 
     if (options.continuous) slide(index+1);
     else if (index < slides.length - 1){
-      $(window).trigger( "custSwipe", [index, index+1] );
       slide(index+1);
     }
 
@@ -153,7 +151,7 @@ function Swipe(container, options) {
       //no fallback for a circular continuous if the browser does not accept transitions
     }
 
-    $(window).trigger( "custSwipe", [index, to] );
+
     index = to;
     offloadFn(options.callback && options.callback(index, slides[index]));
   }

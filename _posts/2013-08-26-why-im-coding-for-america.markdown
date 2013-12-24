@@ -2,7 +2,7 @@
 layout: post
 title:  "Why I'm Coding for America"
 date:   2013-08-26 17:23:51
-description: BizFriendly puts the web to work for your business.
+description: Code for America was an amazing company to intern for...
 url: tylor.im/blog/2013/08/26/why-im-coding-for-america.html
 categories: blog
 name: coding-for-america

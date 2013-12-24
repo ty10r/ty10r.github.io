@@ -6,30 +6,34 @@ $(document).ready(function() {
 	// Give pages scroll states
 	var pages = [new Page(win), new Page(win), new Page(win)];
 
-	var URL = document.URL.split('tylor.im')[1];
+	var URL = window.location.pathname;
 	if ( URL && URL[0] === '/' ) URL = null;
 
 	// Setup Swipe Object
+	var lastPage = 0;
+	var nav = new Nav( lastPage );
 	var elem = document.getElementById('pageSwipe');
 	window.pageSwipe = Swipe(elem, {
-		startSlide: 0,
+		startSlide: lastPage,
 		speed: 400,
 		stopPropagation: false,
-	  callback: function(index, elem) {},
+	  callback: function(index, elem) { 
+		pages[lastPage].SavePos();
+		pages[index].RecallState(baseLine);
+		nav.SetPos( index );
+		lastPage = index;
+	  },
 	  transitionEnd: function(index, elem) {}
 	});
 
 	if ( URL ) {
-		var post = $( '.post[data-url=' + url +']' );
+		var post = $( ".post[data-url=\"" + url +"\"]" );
 		togglePost( post, false );
-		win.scrollTop($(".post[data-url="+URL+"]").offset().top);
+		win.scrollTop($(".post[data-url=\""+URL+"\"]").offset().top);
 		pageSwipe.slide( post.parent().parent().data( 'index' ), 0 );
 	}
 
 	// Stick Navbar on Scroll
-	// Navbar State
-	var nav = new Nav( pageSwipe.getPos() );
-
 	var navFilter = $('nav'), baseLine = undefined;
 	var filterSpacer = $('<div />', {
       "class": "filter-drop-spacer",
@@ -46,12 +50,6 @@ $(document).ready(function() {
 			filterSpacer.remove();
 			baseLine = undefined;
 		}
-	});
-
-	$(window).on("custSwipe", function( event, oldPage, newPage) {
-		pages[oldPage].SavePos();
-		pages[newPage].RecallState(baseLine);
-		nav.SetPos( newPage );
 	});
 
 	// Bind Key Navigation
@@ -71,11 +69,12 @@ $(document).ready(function() {
 	$('.expand').click(function( event ) {
 		var button = $(this);
 		var content = button.prev();
-		var url = button.data( 'url' );
+		var loader = button.next();
+		var url = button.parent().data( 'url' );
 		var container = button.data( 'container' );
 
 		if ( !content.hasClass( 'loadedPost' ) ) {
-			console.log('sending pjax');
+			loader.addClass( 'glowing' );
 			$.pjax( {url: url, container: '#'+container} );
 		}
 		else {
@@ -84,50 +83,54 @@ $(document).ready(function() {
 	});
 
 	$(document).on('pjax:complete', function() {
-		console.log('pjax complete')
-		console.log(document.URL);
-		PjaxStateByUrl( document.URL.split('tylor.im')[1] );
+		PjaxStateByUrl( window.location.pathname );
+	});
+
+	$(window).unload( function() {
+		PageStateByUrl( window.location.pathname, nav );
 	});
 });
 
 function togglePost( post, animate ) {
 	var button = post.children( '.expand' );
 	var loader = post.children( '.loader' );
-	var isExpanded = button.hasClass( '.expanded' );
+	var wasExpanded = button.hasClass( 'expanded' );
 	var content = post.children( '.content' );
 
-	if ( isExpanded ) {
-		loader.removeClass( 'glowing' );
+	if ( wasExpanded ) {
+		button.html( '∨' );
 		button.removeClass( 'expanded' );
 	}
 	else {
-		loader.addClass( 'glowing' );
+		button.html( '∧' );
 		button.addClass( 'expanded' );
-		button.html( 'v' );
 	}
 	if ( animate ) {
-		content.css('opacity', 0)
+		content.css('opacity', wasExpanded ? 1 : 0 )
 		.slideToggle('slow')
 			.animate(
-	   			{ opacity: isExpanded ? 1 : 0 },
-	    		{ queue: false, duration: 'slow', 
-	    		complete: function(){
-	    			if (isExpanded) content.show();
-	    			else content.hide();
-	    		}}
+	   			{ opacity: wasExpanded ? 0 : 1 },
+	    		{ queue: false, duration: 'slow' }
 		);
 	}
 	else {
-		if (isExpanded) content.show();
+		if ( !wasExpanded ) content.show();
 		else content.hide();
 	}
 }
+
 function PjaxStateByUrl( url ) { 
-	console.log(url)
+	var post = $( ".post[data-url=\"" + url +"\"]" );
+	post.children( '.loader' ).removeClass( 'glowing' );
+	togglePost( post, true );
+	post.children( '.content' ).addClass( 'loadedPost' );
+}
+
+function PageStateByUrl( url, nav ) {
 	if ( url ) {
-		var post = $( '.post[data-url=' + url +']' );
-		togglePost( post, true );
-		post.children( '.content' ).addClass( 'loadedPost' );
+		var post = $( ".post[data-url=\"" + url +"\"]" );
+		togglePost( post, false );
+		nav.SetPos( post.closest( 'section' ).data( 'index' ));
 	}
 }
 
