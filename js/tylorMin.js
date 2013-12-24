@@ -88,7 +88,9 @@ $(document).ready(function() {
 
 	$(document).on('pjax:end', function() {
 		var targetPost = allPosts[ window.location.pathname ];
-		targetPost.ToggleContent( true, true );
+		if ( targetPost ) {
+			targetPost.ToggleContent( true, true );
+		}
 	});
 
 });
@@ -113,6 +115,7 @@ var Post = function( urlId ) {
 
 	self.ToggleContent = function(expand, withAnimation ) {
 		self.isExpanded = expand;
+		var slider = 
 		$content.html( self.text );
 		if ( expand ) {
 			$expander.html( '∧' );
@@ -120,9 +123,17 @@ var Post = function( urlId ) {
 		else {
 			$expander.html( '∨' );
 		}
-		if ( withAnimation ) {
+		if ( expand && withAnimation ) {
 			$content.css('opacity', expand ? 0 : 1 )
-			.slideToggle('slow')
+			.slideDown('slow')
+				.animate(
+		   			{ opacity: expand ? 1 : 0 },
+		    		{ queue: false, duration: 'slow' }
+			);
+		}
+		else if ( !expand && withAnimation ) {
+			$content.css('opacity', expand ? 0 : 1 )
+			.slideUp('slow')
 				.animate(
 		   			{ opacity: expand ? 1 : 0 },
 		    		{ queue: false, duration: 'slow' }
@@ -133,6 +144,7 @@ var Post = function( urlId ) {
 			else content.hide();
 		}
 	}
+
 
 	self.Load = function() {
 		self.Loading();
