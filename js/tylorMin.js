@@ -53,6 +53,13 @@ $(document).ready(function() {
 		}
 	});
 
+	$( '.tab' ).click( function(event) {
+		event.stopPropagation();
+		event.preventDefault();
+
+		pageSwipe.slide( $( this ).data( 'pos' ) );
+	})
+
 	// Bind Key Navigation
 	$(document).keydown(function(key) {
 		switch(key.which) {

@@ -41,8 +41,11 @@ nav {
 
 nav .tab {
 	font-size: 20px;
-	height: 40px;
-	line-height: 45px;
+	height: 55px;
+	line-height: 60px;
+}
+nav .tab:hover {
+	cursor: pointer;
 }
 
 .fix {
@@ -115,7 +118,7 @@ nav .tab {
      @-o-keyframes glowing { from { opacity: 1.0; } to { opacity: 0; }  }
         @keyframes glowing { from { opacity: 1.0; } to { opacity: 0; }  }
 
-.expand:hover {
+.post:hover .expand {
 	color: #FAFAF2;
 	background-color: #B9BDBD;
 	cursor: pointer;
