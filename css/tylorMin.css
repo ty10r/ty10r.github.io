@@ -31,6 +31,14 @@ p {
 	line-height: 1;
 }
 
+@media only screen
+and (max-width : 360px) {
+/* Styles */
+	.logo {
+		font-size: 60px;
+	}
+}
+
 nav {
 	text-align: center;
 	width: 100%;
@@ -73,9 +81,20 @@ nav .tab:hover {
 	font-weight: 700;
 	margin: 0 0 0 0;
 }
-
+.img-wrapper {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100px;
+	margin: 25px;
+	text-align: center;
+}
+.img-wrapper img {
+	height: 50px;
+	max-width: 75px;
+}
 .expand {
-	width: 700px;
+	width: 100%;
 	position: relative;
 	top: 5px;
 	left: -5px;
@@ -91,7 +110,7 @@ nav .tab:hover {
 }
 
 .loader {
-	width: 700px;
+	width: 100%;
 	position: absolute;
 	font-size: 20px;
 	text-align: center;

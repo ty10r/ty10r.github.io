@@ -6,6 +6,7 @@ description: Code for America was an amazing company to intern for...
 url: tylor.im/blog/2013/08/26/why-im-coding-for-america.html
 categories: blog
 name: coding-for-america
+image: /imgs/flag_tag.png
 ---
 
 I spent the summer of 2013 interning at [Code for America][Code for America]. There, I had the chance to watch a great community of civic-tech professionals make positive impact. Code for America is a cross-pollination of government and innovational tech industries. 

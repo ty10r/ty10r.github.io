@@ -25,6 +25,7 @@ title: Home
 				<h2 class="subject">{{ post.title }}</h2>
 				<span class="date">{{ post.date | date_to_string }}</span>
 				<p class="description">{{ post.description }}</p>
+				<div class="img-wrapper"><img src="{{post.image}}"></div>
 				<div class="content" style="display:none" id="content-{{post.name}}"></div>
 				<div class="expand">&#8744;</div>
 				<div class="loader">&#8744;</div>
@@ -43,6 +44,7 @@ title: Home
 				<h2 class="subject">{{ post.title }}</h2>
 				<span class="date">{{ post.date | date_to_string }}</span>
 				<p class="description">{{ post.description }}</p>
+				<div class="img-wrapper"><img src="{{post.image}}"></div>
 				<div class="content" style="display:none" id="content-{{post.name}}"></div>
 				<div class="expand">&#8744;</div>
 				<div class="loader">&#8744;</div>
