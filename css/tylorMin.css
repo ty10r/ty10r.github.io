@@ -75,7 +75,6 @@ nav .tab:hover {
 .post {
 	background-color: #FAFAF2;
 	margin: 0px 0px 20px 0px;
-	padding: 5px;
 	position: relative;
 }
 
@@ -84,12 +83,15 @@ nav .tab:hover {
 	font-weight: 700;
 	margin: 0 0 0 0;
 }
+.description, .date {
+	color: #B3B3B1;
+}
 .img-wrapper {
 	position: absolute;
 	right: 0;
 	top: 0;
 	width: 100px;
-	margin: 25px;
+	margin: 20px 15px;
 	text-align: center;
 }
 .img-wrapper img {
@@ -99,8 +101,6 @@ nav .tab:hover {
 .expand {
 	width: 100%;
 	position: relative;
-	top: 5px;
-	left: -5px;
 	margin: 0 auto;
 	font-size: 20px;
 	font-weight: 700;
@@ -140,6 +140,18 @@ nav .tab:hover {
      @-o-keyframes glowing { from { opacity: 1.0; } to { opacity: 0; }  }
         @keyframes glowing { from { opacity: 1.0; } to { opacity: 0; }  }
 
+.content { 
+	font-size: 20px;
+	padding: 10px;
+	font-family: 'Kreon', serif;
+}
+.content p {
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+.content h2 {
+	font-weight: 700;
+}
 .post:hover .expand {
 	color: #FAFAF2;
 	background-color: #B9BDBD;
