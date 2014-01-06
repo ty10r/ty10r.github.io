@@ -158,6 +158,9 @@ nav .tab:hover {
 	cursor: pointer;
 	text-decoration: none;
 }
+.post:hover .subject {
+	cursor: pointer;
+}
 
 a:hover {
 	text-decoration: none;

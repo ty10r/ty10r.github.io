@@ -74,8 +74,10 @@ $(document).ready(function() {
 	});
 
 	// If no data loaded, pjax request, else toggle post view
-	$('.post').click(function( event ) {
-		var postObj = allPosts[ $(this).data( 'url' ) ];
+	$('.post').on( 'click', '.subject, .expand', function( event ) {
+		var self = $(this);
+		var url = self.parent().data( 'url' );
+		var postObj = allPosts[ url ];
 		if ( !postObj.isLoaded ) {
 			postObj.Load();
 		}
