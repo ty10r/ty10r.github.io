@@ -124,7 +124,6 @@ var Post = function( urlId ) {
 
 	self.ToggleContent = function(expand, withAnimation ) {
 		self.isExpanded = expand;
-		var slider = 
 		$content.html( self.text );
 		if ( expand ) {
 			$expander.html( '∧' );
