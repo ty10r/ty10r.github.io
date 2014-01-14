@@ -131,25 +131,19 @@ var Post = function( urlId ) {
 		else {
 			$expander.html( '∨' );
 		}
-		if ( expand && withAnimation ) {
-			$content.css('opacity', expand ? 0 : 1 )
-			.slideDown('slow')
-				.animate(
-		   			{ opacity: expand ? 1 : 0 },
-		    		{ queue: false, duration: 'slow' }
-			);
-		}
-		else if ( !expand && withAnimation ) {
-			$content.css('opacity', expand ? 0 : 1 )
-			.slideUp('slow')
-				.animate(
-		   			{ opacity: expand ? 1 : 0 },
-		    		{ queue: false, duration: 'slow' }
-			);
+		var curHeight = $content.height();
+		if ( curHeight > 0 ) {
+			$content.css('height', '0');
 		}
 		else {
-			if ( expand ) content.show();
-			else content.hide();
+			var mock = $content.clone().css({'position': 'absolute', 'visbility': 'hidden',
+											 'height': 'auto'})
+										.attr('id', 'slideMock')
+										.appendTo($element);
+			var newHeight = $('#slideMock').height();
+			$("#slideMock").remove();
+			$content.css('height', newHeight + 'px');
+
 		}
 	}
 
