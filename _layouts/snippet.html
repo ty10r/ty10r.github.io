@@ -1,0 +1,11 @@
+---
+layout: snipped
+categories: blog
+---
+			<div class="post perma" data-url="{{page.url}}" data-container="content-{{page.name}}">
+				<h2 class="subject">{{ page.title }}</h2>
+				<span class="date">{{ page.date | date_to_string }}</span>
+				<p class="description">{{ page.description }}</p>
+				<div class="img-wrapper"><img src="{{page.image}}"></div>
+				<div class="content" id="content-{{page.name}}">{{ content }}</div>
+			</div>

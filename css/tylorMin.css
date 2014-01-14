@@ -62,6 +62,12 @@ nav .tab {
 nav .tab:hover {
 	cursor: pointer;
 }
+.bar a{
+	color: #FAFAF2;
+}
+.bar a:hover{
+	color: #82B3BF;
+}
 
 .fix {
 	position: fixed;
@@ -157,6 +163,11 @@ nav .tab:hover {
 .content h2 {
 	font-weight: 700;
 	margin: 35px 10px 20px;
+}
+.perma{
+	margin: 0 auto;
+	position: relative;
+	max-width: 700px;
 }
 .post:hover .expand {
 	color: #FAFAF2;

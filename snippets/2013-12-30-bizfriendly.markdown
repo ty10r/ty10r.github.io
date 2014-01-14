@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: snippet
 title:  "Diving into WebDev with Bizfriendly"
 date:   2013-12-30 04:04:00
 description: My first significant web development project
