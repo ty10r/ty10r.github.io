@@ -1,5 +1,5 @@
 body {
-	font-family: 'Droid Sans', sans-serif;
+	font-family: 'Droid Sans Mono', sans-serif;
 	background: #EDF1F2;
 	color: #444145;
 }
@@ -21,12 +21,16 @@ p {
 .header	{
 	text-align: center;
 	margin: 115px 0px 115px 0px;
+	font-family: 'Abel', sans-serif;
+}
+.header p{
+	font-size: 18px;
 }
 
 .logo {
 	font-size: 100px;	
-	font-weight: 300;
-	font-family: 'Kreon', serif;
+	font-weight: 700;
+	font-family: 'Abel', sans-serif;
 	letter-spacing: -0.05em;
 	line-height: 1;
 }
@@ -79,7 +83,7 @@ nav .tab:hover {
 }
 
 .subject {
-	font-family: 'Droid Sans', sans-serif;
+	font-family: 'Droid Sans Mono', sans-serif;
 	font-weight: 700;
 	margin: 0 0 0 0;
 }
@@ -143,14 +147,16 @@ nav .tab:hover {
 .content { 
 	font-size: 20px;
 	padding: 10px;
-	font-family: 'Kreon', serif;
+	font-family: 'Abel', sans-serif;
 }
 .content p {
 	margin-top: 15px;
 	margin-bottom: 20px;
+	letter-spacing: -.02em;
 }
 .content h2 {
 	font-weight: 700;
+	margin: 35px 10px 20px;
 }
 .post:hover .expand {
 	color: #FAFAF2;
