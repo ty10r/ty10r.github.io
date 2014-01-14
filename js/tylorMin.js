@@ -35,23 +35,45 @@ $(document).ready(function() {
 	//* EVENT HANDLERS
 	//*******************************************
 	// Stick Navbar on Scroll
-	var navFilter = $('nav'), baseLine = undefined;
-	var filterSpacer = $('<div />', {
-      "class": "filter-drop-spacer",
-      "height": navFilter.outerHeight()
-    });
-	win.scroll(function(){ 
-		var scrollTop = win.scrollTop();    
-		if(!navFilter.hasClass('fix') && scrollTop > navFilter.offset().top){
-			navFilter.before(filterSpacer);
-			navFilter.addClass("fix");
+	// var navFilter = $('nav'), baseLine = undefined;
+	// var filterSpacer = $('<div />', {
+ //      "class": "filter-drop-spacer",
+ //      "height": navFilter.outerHeight()
+ //    });
+	// win.scroll(function(){ 
+	// 	var scrollTop = win.scrollTop();    
+	// 	if(!navFilter.hasClass('fix') && scrollTop > navFilter.offset().top){
+	// 		navFilter.before(filterSpacer);
+	// 		navFilter.addClass("fix");
+	// 		baseLine = scrollTop;
+	// 	} else if (navFilter.hasClass('fix')  && scrollTop < filterSpacer.offset().top){
+	// 		navFilter.removeClass("fix");
+	// 		filterSpacer.remove();
+	// 		baseLine = undefined;
+	// 	}
+	// });
+
+	var baseLine = undefined;
+	var fixedNav = $('nav');
+	var navTop = fixedNav.offset().top;
+	var fixNav = function(){
+		var scrollTop = win.scrollTop();
+		var isFixed = fixedNav.hasClass('fix');
+		if ( !isFixed && scrollTop > navTop ) {
+			$('.filter-spacer').show();
+			fixedNav.addClass('fix');
 			baseLine = scrollTop;
-		} else if (navFilter.hasClass('fix')  && scrollTop < filterSpacer.offset().top){
-			navFilter.removeClass("fix");
-			filterSpacer.remove();
+		}
+		else if ( isFixed && scrollTop < navTop ){
+			$('.filter-spacer').hide();
+			fixedNav.removeClass('fix');
 			baseLine = undefined;
 		}
-	});
+	}
+	fixNav();
+	win.scroll(function(){
+		fixNav();
+	})
 
 	$( '.tab' ).click( function(event) {
 		event.stopPropagation();

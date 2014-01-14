@@ -45,7 +45,9 @@ and (max-width : 360px) {
 		display: none;
 	}
 }
-
+.filter-spacer{
+	height: 60px;
+}
 nav {
 	text-align: center;
 	width: 100%;
